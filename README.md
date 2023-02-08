@@ -1,1 +1,2 @@
-# rl-project-human-preferences
+# Reinforcement Learning Project
+### *Deep Reinforcement Learning from Human Preferences*
