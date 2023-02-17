@@ -63,8 +63,6 @@ class DSpace:
 
         print("initialize_D_space: End")
 
-        return self.D_space
-
     # We shall call this function each T+5e6/5e6 timesteps
     def feeding_d_space(self, obs1, obs2, real_reward_1=[], real_reward_2=[]):
         if self.real_human_check:

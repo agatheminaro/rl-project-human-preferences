@@ -4,4 +4,4 @@ autorom
 torch
 numpy
 matplotlib
-
+pillow

@@ -42,7 +42,7 @@ class RLWithHumanPreferences:
             alpha=alpha,
             beta=beta,
             update_every=update_every,
-            actor_m=actor
+            actor_m=actor,
             critic_m=critic,
         )
 
@@ -53,7 +53,6 @@ class RLWithHumanPreferences:
 
         # We initialize our Human Rewarder
         self.human_rewarder = HumanFeedBackRewardFunction(device)
-
 
     def train_with_human_preferences(self, n_episodes=1000):
         # We create our Human Rewarder training class
@@ -156,8 +155,8 @@ class RLWithHumanPreferences:
             print("Episode:", i_episode)
         return scores
 
-
     def save_model(self):
-        torch.save(self.human_rewarder.net.state_dict(), './Human_rewarder_saved_model')
-        self.human_rewarder.net.load_state_dict(torch.load('Human_rewarder_saved_model'))
-    
+        torch.save(self.human_rewarder.net.state_dict(), "./Human_rewarder_saved_model")
+        self.human_rewarder.net.load_state_dict(
+            torch.load("Human_rewarder_saved_model")
+        )
