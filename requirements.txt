@@ -1,0 +1,7 @@
+gymnasium
+gymnasium[all]
+autorom
+torch
+numpy
+matplotlib
+
