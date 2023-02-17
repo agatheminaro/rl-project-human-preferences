@@ -10,7 +10,7 @@ from reward_function import HumanFeedBackRewardFunction
 from train_human_rewarder import HumanRewarderTraining
 
 
-class RLWithHumanPreferences:
+class RLFromHumanPreferences:
     def __init__(
         self,
         input_shape,
@@ -55,7 +55,7 @@ class RLWithHumanPreferences:
         # We initialize our Human Rewarder
         self.human_rewarder = HumanFeedBackRewardFunction(device)
 
-    def train_with_human_preferences(self, n_episodes=1000):
+    def train_from_human_preferences(self, n_episodes=1000):
         # We create our Human Rewarder training class
         train_human_rewarder = HumanRewarderTraining(self.D_space, self.human_rewarder)
         # We pretrain our Human Rewarder
@@ -121,11 +121,9 @@ class RLWithHumanPreferences:
                 if (1 / 2) ** (((T * 1e3) + 5e6) / 5e6) > labelled_number:
                     if len(obs_list) == 50:
                         print("Feed D_space")
-                        self.D_space = self.D_space.feeding_d_space(
+                        self.D_space = self.class_d_space.feeding_d_space(
                             obs_list[0:25],
                             obs_list[25:50],
-                            self.D_space,
-                            self.real_human_check,
                             real_reward_list[0:25],
                             real_reward_list[25:50],
                         )
