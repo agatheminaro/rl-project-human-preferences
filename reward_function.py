@@ -23,8 +23,6 @@ class HumanFeedBackRewardFunction(nn.Module):
 
         self.device = device
 
-        self.reward_from_softmax = torch.Tensor([-1, 0, 1]).to(self.device)
-
         self.nets = []
         self.optimizers = []
 
@@ -52,7 +50,7 @@ class HumanFeedBackRewardFunction(nn.Module):
             nn.Dropout(0.5),
             nn.Flatten(),
             nn.Linear(784, 64),
-            nn.Linear(64, 3),
+            nn.Linear(64, 1),
         )
 
         return net
@@ -78,22 +76,14 @@ class HumanFeedBackRewardFunction(nn.Module):
         for net in self.nets:
             if train:
                 net.train()
-                rewards.append(F.log_softmax(net(obs), dim=1))
+                rewards.append(net(obs))
             else:
                 net.eval()
                 with torch.no_grad():
-                    rewards.append(F.log_softmax(net(obs), dim=1))
+                    rewards.append(net(obs))
 
-        print(rewards)
-        rewards = torch.vstack(rewards)
-        print(len(rewards))
-        print(rewards[0].shape)
-        reward_indices = torch.argmax(rewards, dim=1)
-        print(reward_indices.shape)
-        print(self.reward_from_softmax[reward_indices].shape)
-        print(self.reward_from_softmax[reward_indices])
-        print("----")
-        return self.reward_from_softmax[reward_indices]
+        
+        return rewards
 
     def update(self, fake_reward_1, fake_reward_2, human_choice_list):
         """Updates the reward network's weights."""
