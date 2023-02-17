@@ -47,9 +47,10 @@ class RLWithHumanPreferences:
         )
 
         # We initialize our D space
-        self.D_space = DSpace(
+        self.class_d_space = DSpace(
             env=self.env, agent=self.agent, real_human_check=real_human_check
         )
+        self.D_space = self.class_d_space.D_space
 
         # We initialize our Human Rewarder
         self.human_rewarder = HumanFeedBackRewardFunction(device)
@@ -58,7 +59,7 @@ class RLWithHumanPreferences:
         # We create our Human Rewarder training class
         train_human_rewarder = HumanRewarderTraining(self.D_space, self.human_rewarder)
         # We pretrain our Human Rewarder
-        train_human_rewarder.pretrain_human_rewarder()
+        self.human_rewarder = train_human_rewarder.pretrain_human_rewarder()
 
         T = 1  # Timestep over all the episodes
         timestep = 0  # timestep over one episoded
@@ -83,7 +84,7 @@ class RLWithHumanPreferences:
             while True:
                 # Each 10 timestep we train our HumanRewarder
                 if timestep % 10 == 0:
-                    train_human_rewarder.train_human_rewarder()
+                    self.human_rewarder = train_human_rewarder.train_human_rewarder()
 
                 # We take an action and our agent learn from it
                 action, log_prob, entropy = self.agent.act(obs)

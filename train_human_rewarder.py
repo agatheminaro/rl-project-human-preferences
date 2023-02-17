@@ -60,6 +60,7 @@ class HumanRewarderTraining:
         self.human_rewarder.update(
             fake_reward_1_list_all, fake_reward_2_list_all, human_choice_list
         )
+        return self.human_rewarder
 
     def pretrain_human_rewarder(self):
         """In the Atari domain we also pretrain the reward predictor for 200 epochs
@@ -68,9 +69,10 @@ class HumanRewarderTraining:
 
         print("Start of the pretrain of the Human Rewarder...")
         for epoch in range(0, 200):
-            self.train_human_rewarder()
+            self.human_rewarder = self.train_human_rewarder()
 
             if epoch % 20 == 0:
                 print("Pretrain of the HumanRewarder, Step:", epoch, "/200")
 
         print("End of the pretrain of the Human Rewarder.")
+        return self.human_rewarder
