@@ -36,10 +36,8 @@ class HumanRewarderTraining:
                 )  # We append (1,3)
                 fake_reward_2_list.append(self.human_rewarder(obs_2_i, True))
 
-            fake_reward_1_list = torch.sum(
-                fake_reward_1_list, axis=0
-            )  # From (6,3) to (1, 3)
-            fake_reward_2_list = torch.sum(fake_reward_2_list, axis=0)
+            fake_reward_1_list = torch.sum(torch.Tensor(fake_reward_1_list), axis = 0) #From (6,3) to (1, 3)
+            fake_reward_2_list = torch.sum(torch.Tensor(fake_reward_2_list), axis = 0)
 
             if len(fake_reward_1_list_all) == 0:
                 fake_reward_1_list_all = fake_reward_1_list.unsqueeze(0)
